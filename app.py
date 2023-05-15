@@ -2,8 +2,20 @@ from http import client
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://???:sparta@cluster0.gaybq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
-db = client.dbsparta
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URL = os.environ.get("mongodb+srv://???:sparta@cluster0.gaybq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+DB_NAME = os.environ.get("dbsparta")
+
+client = MongoClient(MONGODB_URL)
+db = client(DB_NAME)
 
 app = Flask(__name__)
 
